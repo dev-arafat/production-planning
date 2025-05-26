@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <report
+        id="action_report_production_planning"
+        string="Production Planning Report"
+        model="production.planning"
+        report_type="qweb-pdf"
+        name="production_planning.report_production_planning_template"
+        file="production_planning.report_production_planning_template"
+        print_report_name="'Production Planning - %s' % (object.name)"
+    />
+</odoo>

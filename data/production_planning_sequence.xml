@@ -1,0 +1,9 @@
+<odoo>
+    <record id="seq_material_requisition" model="ir.sequence">
+        <field name="name">Material Requisition</field>
+        <field name="code">material.requisition</field>
+        <field name="prefix">MRQ-</field>
+        <field name="padding">5</field>
+        <field name="number_next">1</field>
+    </record>
+</odoo>

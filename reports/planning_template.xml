@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_production_planning_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <div class="page">
+                    <h2>Production Planning Report</h2>
+                    <p><strong>Created By:</strong> <t t-esc="doc.name"/></p>
+                    <p><strong>Product:</strong> <t t-esc="doc.product_id.display_name"/></p>
+                    <p><strong>Quantity:</strong> <t t-esc="doc.quantity"/></p>
+                    <p><strong>Department:</strong> <t t-esc="doc.department"/></p>
+                    <p><strong>Supervisor:</strong> <t t-esc="doc.supervisor"/></p>
+                    <p><strong>Planned Date:</strong> <t t-esc="doc.planned_date"/></p>
+                    <p><strong>Planned Closing Date:</strong> <t t-esc="doc.planned_closing_date"/></p>
+                    <p><strong>Total Days:</strong> <t t-esc="doc.total_day"/></p>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

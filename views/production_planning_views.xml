@@ -1,0 +1,105 @@
+<odoo>
+    <record id="view_production_planning_tree" model="ir.ui.view">
+        <field name="name">production.planning.tree</field>
+        <field name="model">production.planning</field>
+        <field name="arch" type="xml">
+            <tree decoration-success="state=='done'" decoration-danger="state == 'cancel'">
+                <field name="create_by"/>
+                <field name="product_id"/>
+                <field name="quantity"/>
+                <field name="department"/>
+                <field name="supervisor"/>
+                <field name="total_day"/>
+                <field name="planned_date"/>
+                <field name="planned_closing_date"/>
+                <field name="state" decoration-info="state in ('draft','approve')"
+                       decoration-success="state=='done'" decoration-danger="state == 'cancel'" widget="badge"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_production_planning_calendar" model="ir.ui.view">
+        <field name="name">production.planning.calendar</field>
+        <field name="model">production.planning</field>
+        <field name="arch" type="xml">
+            <calendar string="Production Planning Calendar" date_start="planned_date" color="department">
+                <field name="name"/>
+                <field name="product_id"/>
+                <field name="quantity"/>
+                <field name="supervisor"/>
+            </calendar>
+        </field>
+    </record>
+
+        <!-- Gantt View -->
+        <record id="view_production_planning_gantt" model="ir.ui.view">
+            <field name="name">production.planning.gantt</field>
+            <field name="model">production.planning</field>
+            <field name="arch" type="xml">
+                <gantt string="Production Planning Gantt"
+                       date_start="planned_date"
+                       date_stop="planned_closing_date"
+                       default_group_by="department">
+                    <field name="name"/>
+                    <field name="product_id"/>
+                    <field name="supervisor"/>
+                </gantt>
+            </field>
+        </record>
+
+        <record id="view_production_planning_form" model="ir.ui.view">
+            <field name="name">production.planning.form</field>
+            <field name="model">production.planning</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="print_pdf" string="Print PDF" type="object" class="btn-primary"/>
+
+                        <button name="action_approve" string="Approve" type="object" class="oe_highlight" invisible="state =='approve' or state =='done'"/>
+                        <button name="action_done" string="Done" type="object" class="oe_highlight" invisible="state =='done'"/>
+                        <button name="action_cancel" string="Cancel" type="object" class="oe_highlight" invisible="state =='done'"/>
+                        <field name="state" widget="statusbar"
+                               statusbar_visible="draft,approve,done"/>
+
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="create_by"/>
+                                <field name="product_id"/>
+                                <field name="quantity"/>
+                                <field name="planned_date"/>
+                            </group>
+                            <group>
+                                <field name="ref_id"/>
+                                <field name="work_order"/>
+                                <field name="department"/>
+                                <field name="supervisor"/>
+                                <field name="planned_closing_date"/>
+                                <field name="total_day"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <!--chatter-->
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_production_planning" model="ir.actions.act_window">
+            <field name="name">Production Planning</field>
+            <field name="res_model">production.planning</field>
+            <field name="view_mode">gantt,tree,form,calendar</field>
+        </record>
+
+        <menuitem id="menu_production_planning"
+                  name="Production Planning"
+                  parent="mrp.mrp_planning_menu_root"
+                  action="action_production_planning"
+                  sequence="20"/>
+    </odoo>
